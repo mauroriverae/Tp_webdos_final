@@ -19,7 +19,7 @@
             $id = $params[":ID"];
             $companies = $this->model->getCompany($id);
             return $this->view->response($companies, 200);
-        }
+        } 
 
 
 

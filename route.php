@@ -5,6 +5,6 @@
     $router = new Router();
 
     $router -> addRoute('company', 'GET', 'FinanceApiController', 'showCompanies');
-    $router -> addRoute('company:/ID', 'GET', 'FinanceApiController', 'showCompany');
+    $router -> addRoute('company/:ID', 'GET', 'FinanceApiController', 'showCompany');
 
     $router->route($_GET["resource"], $_SERVER['REQUEST_METHOD']);
