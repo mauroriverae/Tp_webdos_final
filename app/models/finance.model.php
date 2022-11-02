@@ -23,7 +23,7 @@ class FinanceModel {
     }
 
     function deleteCompnayByname($company) {
-       $query = $this->db->prepare('DELETE FROM companies WHERE Company = ?');
+       $query = $this->db->prepare('DELETE FROM companies WHERE Tiker = ?');
        $query->execute([$company]);
    }
 

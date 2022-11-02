@@ -13,15 +13,31 @@
 
         function showCompanies(){
             $companies = $this->model->getAllCompany();
-            return $this->view->response($companies, 200);
+            if($companies){
+                return $this->view->response($companies, 200);
+            } else{
+                return $this->view->response("La base de datos esta vacia", 204);
+            }
         }
-        function showCompany($params = []){
+        function showCompany($params = null){
             $id = $params[":ID"];
-            $companies = $this->model->getCompany($id);
-            return $this->view->response($companies, 200);
+            $company = $this->model->getCompany($id);
+            if($company){
+                return $this->view->response($company, 200);
+            } else{
+                return $this->view->response("La emprasa con el tiker $id no existe", 404);
+            }
         } 
-
-
-
+        
+        function deleteCompany($params = null) {
+            $id=$params[":ID"];
+            $company = $this->model->getCompany($id);
+            if($company){
+                $this->model->deleteCompnayByname($id);
+                return $this->view->response("El tiker $id fue borrado con exito", 200);
+            } else{
+                return $this->view->response("no se pudo eliminar $id ", 400);
+            }
+        }
 
     }
