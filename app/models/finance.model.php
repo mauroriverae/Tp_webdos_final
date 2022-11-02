@@ -38,7 +38,7 @@ class FinanceModel {
     function insertCompany($company , $sector , $tiker) {
         $query = $this->db->prepare("INSERT INTO companies (Company, Sector, Tiker) VALUES (?, ?, ?)");
         $query->execute([$company, $sector, $tiker]);
-        return $this->db->lastInsertId(); //para mi caso no sirve, devuelve el id con el que se inserto
+        return $this->db->lastInsertId();
     }
 
     function updateCompany($company , $sector , $tiker){

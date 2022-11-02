@@ -22,6 +22,20 @@
         } 
 
 
+        //Refactorizar BD, agregarle id como primary
+        function addCompany(){
+            $body = $this->getBody();
 
+            if(!empty($body->Company)&& !empty($body->Sector)&& !empty($body->Tiker)){
+                $this->model->insertCompany($body->Company , $body->Sector , $body->Tiker);
+                return $this->view->response("Agregado con exito", 200);
+            }else {
+                return $this->view->response("Faltan completar campos", 400);
+            }
+        }
 
-    }
+        private function getBody(){
+            $bodyString= file_get_contents("php://input");
+            return  json_decode($bodyString);
+        }
+

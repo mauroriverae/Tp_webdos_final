@@ -11,6 +11,8 @@ class FinanceApiView{
     private function _requestStatus($code){
         $status = array(
           200 => "OK",
+          204 =>"No Content",
+          400 =>"Bad Request",
           404 => "Not found",
           500 => "Internal Server Error"
         );
