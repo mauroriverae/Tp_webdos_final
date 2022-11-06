@@ -41,10 +41,19 @@ class FinanceModel {
         return $this->db->lastInsertId();
     }
 
-    function updateCompany($company , $sector , $tiker){
-        $query = $this->db->prepare("UPDATE companies SET Company=?, Sector=?, Tiker=? WHERE Tiker=?");
-        $query->execute([$company , $sector , $tiker, $tiker ]);
+    function updateCompany($company , $sector , $tiker, $id){
+        $query = $this->db->prepare("UPDATE companies SET Company=?, Sector=?, Tiker=? WHERE id=?");
+        $query->execute([$company , $sector , $tiker, $id ]);
     }
+
+    public function get($id) {
+        $query = $this->db->prepare("SELECT * FROM companies WHERE id = ?");
+        $query->execute([$id]);
+        $company = $query->fetch(PDO::FETCH_OBJ);
+        
+        return $company;
+    }
+
 
 }
 
