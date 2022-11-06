@@ -14,16 +14,45 @@
         function showCompanies(){
             $companies = $this->model->getAllCompany();
             return $this->view->response($companies, 200);
+            
         }
-        function showCompany($params = []){
-            $id = $params[":ID"];
-            $companies = $this->model->getCompany($id);
-            return $this->view->response($companies, 200);
+        
+        function showCompany($params = null){
+            $tiker = $params[":ID"];
+            $company = $this->model->getCompany($tiker);
+            if($company)
+                return $this->view->response($company, 200);
+            else
+                return $this->view->response("El tiker = $tiker no exite", 404);
         } 
 
+        function updateCompany($params = null){
+            $tiker = $params[":ID"];
+            $body = $this->getBody();
+            $company = $this->model->getCompany($tiker);
+            if($company){
+                $this->model->updateCompany($body->Company , $body->Sector, $body->Tiker);
+                return $this->view->response("El tiker = $tiker fue modificado con exito", 200);
+            }
+            else{
+                return $this->view->response("El tiker $tiker no fue modificado", 400);
+            }
+        } 
+        
+        function deleteCompany($params = null){
+            $tiker = $params[":ID"];
+            $company = $this->model->getCompany($tiker);
+            if($company){
+                $this->model->deleteCompnayByname($tiker);
+                return $this->view->response("Borrado con exito", 200);
+            } else{
+                return $this->view->response("El tiker $tiker no existe", 404);
+            }
+        }
 
-        //Refactorizar BD, agregarle id como primary
-        function addCompany(){
+
+        function addCompany($params = null){
+            //Refactorizar BD, agregarle id como primary
             $body = $this->getBody();
 
             if(!empty($body->Company)&& !empty($body->Sector)&& !empty($body->Tiker)){
@@ -38,5 +67,5 @@
             $bodyString= file_get_contents("php://input");
             return  json_decode($bodyString);
         }
-
+ 
     }
