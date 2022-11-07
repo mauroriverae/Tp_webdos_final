@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="{BASE_URL}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="templates/style.css">
+    <title>MR</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="company">MR CSR</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" name="Tecnologia" href="sector/Tecnologia">Tecnologicas</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" name="nombre" href="sector/Industriales">Industriales</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" name="nombre" href="sector/Servicios financieros">Financieras</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" name="nombre" href="sector/Consumo discrecional">Consumo discrecional</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" name="nombre" href="sector/Energia">Energia</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" name="nombre" href="sector/Servicios de comunicacion">Servicios de comunicacion</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" name="nombre" href="sector/Materiales Basicos">Materiales Basicos</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <main class="container">
+      <form action="add" method="POST" class="my-4">
+        <div class="row">
+            <div class="col-9">
+                <div class="form-group">
+                    <label>company</label>
+                    <input name="company" type="text" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label>Sector</label>
+                    <select name="sector" class="form-control">
+                        <option value="Tecnologia">Tecnologia</option>
+                        <option value="Servicios de comunicacion">	Servicios de comunicacion</option>
+                        <option value="Materiales Basicos">Materiales Basicos</option>
+                        <option value="Servicios financieros">	Servicios financieros</option>
+                        <option value="Consumo discrecional">	Consumo discrecional</option>
+                        <option value="Industriales">Industriales</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label>Tiker</label>
+            <input name="tiker" type="text" class="form-control i__tiker" required>
+        </div>
+    
+    
+        <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+        
+      </form>
+    </main>
+    <footer class="text-center">
+        <p>&copy;MauroRivera</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="../js/app.js"></script>
+    </body>
+    </html>
+    
