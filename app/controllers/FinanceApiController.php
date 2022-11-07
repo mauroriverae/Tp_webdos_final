@@ -19,36 +19,37 @@
         }
         
         function showCompany($params = null){
-            $tiker = $params[":ID"];
-            $company = $this->model->getCompany($tiker);
+            $id = $params[":ID"];
+            $company = $this->model->getCompany($id);
             if($company)
                 return $this->view->response($company, 200);
             else
-                return $this->view->response("El tiker = $tiker no exite", 404);
+                return $this->view->response("El tiker con $id no exite", 404);
         } 
 
         function updateCompany($params = null){
-            $tiker = $params[":ID"];
+            $id = $params[":ID"];
             $body = $this->getBody();
-            $company = $this->model->getCompany($tiker);
+            $company = $this->model->getCompany($id);
             if($company){
-                if(!empty($body->Company)&& !empty($body->Sector) &&!empty($body->id)){
-                    $this->model->updateCompany($body->Company , $body->Sector, $tiker, $body->id);
-                    return $this->view->response("El tiker = $tiker fue modificado con exito", 200);
+                if(!empty($body->Company)&& !empty($body->Sector) &&!empty($body->Tiker)){
+                    $this->model->updateCompany($body->Company , $body->Sector, $body->Tiker, $id);
+                    $company = $this->model->getCompany($id);
+                    return $this->view->response($company, 200);
                 } else{
                     return $this->view->response("Complete todos los campos para modificar", 400);
                 }
             }
             else{
-                return $this->view->response("El tiker $tiker no fue modificado", 400);
+                return $this->view->response("El tiker con $id no fue modificado", 400);
             }
         } 
         
         function deleteCompany($params = null){
-            $tiker = $params[":ID"];
-            $company = $this->model->getCompany($tiker);
+            $id = $params[":ID"];
+            $company = $this->model->getCompany($id);
             if($company){
-                $this->model->deleteCompnayByname($tiker);
+                $this->model->deleteCompnayByname($id);
                 return $this->view->response("Borrado con exito", 200);
             } else{
                 return $this->view->response("El tiker $tiker no existe", 404);
@@ -60,8 +61,8 @@
             //Refactorizar BD, agregarle id como primary
             $body = $this->getBody();
             $tiker = $body->Tiker;
-            if(!empty($body->Company)&& !empty($body->Sector)&& !empty($body->Tiker)){
-                $id = $this->model->insertCompany($body->Company , $body->Sector , $body->Tiker);
+            if(!empty($body->Company)&& !empty($body->Sector)&& !empty($tiker)){
+                $id = $this->model->insertCompany($body->Company , $body->Sector , $tiker);
                 $company = $this->model->get($id);
                 return $this->view->response($company, 200);
             }else {

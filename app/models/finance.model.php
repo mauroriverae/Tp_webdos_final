@@ -16,15 +16,15 @@ class FinanceModel {
     }
     //NO ANDA 
     function getCompany($id) {
-        $query = $this->db->prepare("SELECT * FROM companies WHERE Tiker=?");
+        $query = $this->db->prepare("SELECT * FROM companies WHERE id=?");
         $query->execute([$id]);
         $company = $query->fetch(PDO::FETCH_OBJ);
         return $company;
     }
 
-    function deleteCompnayByname($company) {
-       $query = $this->db->prepare('DELETE FROM companies WHERE Tiker = ?');
-       $query->execute([$company]);
+    function deleteCompnayByname($id) {
+       $query = $this->db->prepare('DELETE FROM companies WHERE id = ?');
+       $query->execute([$id]);
    }
 
     function FilterCompany($sector){
