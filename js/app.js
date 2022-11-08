@@ -93,5 +93,3 @@ async function  deleteCompany(e){
     }
 }
 getCompany();
-
-//minitu 46:33

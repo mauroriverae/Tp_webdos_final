@@ -27,6 +27,16 @@
                 return $this->view->response("El tiker con $id no exite", 404);
         } 
 
+        function showSector($params = null){
+            $sector = $params[":ID"];
+            echo $sector;
+            $companies = $this->model->FilterCompany($sector);
+            if($companies)
+                return $this->view->response($companies, 200);
+            else
+                return $this->view->response("El $sector no existe", 404);
+        } 
+
         function updateCompany($params = null){
             $id = $params[":ID"];
             $body = $this->getBody();
