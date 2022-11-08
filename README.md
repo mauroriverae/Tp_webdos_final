@@ -1,6 +1,3 @@
-# Tp_webdos_final
-Trabajo practico final Web dos - UNICEN
-
 # API REST ENDPOINT’S
 
 GET /company
