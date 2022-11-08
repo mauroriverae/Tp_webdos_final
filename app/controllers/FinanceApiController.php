@@ -5,15 +5,19 @@
     class FinanceApiController {
         private $model;
         private $view;
+        private $data;
 
         public function __construct() {
             $this->model = new FinanceModel();
             $this->view = new FinanceApiView();
+            $this->data = file_get_contents("php://input");
         }
 
         function showCompanies(){
             //faltan validaciones 
-            $companies = $this->model->getAllCompany();
+            
+            $companies = $this->model->getAllCompany("Sector");
+
             return $this->view->response($companies, 200);
             
         }
@@ -70,9 +74,9 @@
         function addCompany($params = null){
             //Refactorizar BD, agregarle id como primary
             $body = $this->getBody();
-            $tiker = $body->Tiker;
+            $tiker = strtoupper($body->Tiker);
             if(!empty($body->Company)&& !empty($body->Sector)&& !empty($tiker)){
-                $id = $this->model->insertCompany($body->Company , $body->Sector , $tiker);
+                $id = $this->model->insertCompany(ucwords($body->Company) , $body->Sector , $tiker);
                 $company = $this->model->get($id);
                 return $this->view->response($company, 200);
             }else {
@@ -82,8 +86,7 @@
         }
 
         private function getBody(){
-            $bodyString= file_get_contents("php://input");
-            return  json_decode($bodyString);
+            return  json_decode($this->data);
         }
  
     }

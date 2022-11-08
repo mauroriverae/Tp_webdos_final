@@ -8,13 +8,13 @@ class FinanceModel {
         $this->db = new PDO('mysql:host=localhost;'.'dbname=finance;charset=utf8', 'root', '');
     }
 
-    public function getAllCompany() {
-        $query = $this->db->prepare("SELECT * FROM companies");
-        $query->execute();
+    public function getAllCompany($order) {
+        $query = $this->db->prepare("SELECT * FROM companies ORDER BY $order ");
+        $query->execute([]);
         $company = $query->fetchAll(PDO::FETCH_OBJ); 
         return $company;
     }
-    //NO ANDA 
+
     function getCompany($id) {
         $query = $this->db->prepare("SELECT * FROM companies WHERE id=?");
         $query->execute([$id]);
@@ -54,6 +54,11 @@ class FinanceModel {
         return $company;
     }
 
-
+    public function orderCompany($order){
+        $query = $this->db->prepare("SELECT * FROM companies ORDER BY id $order");
+        $query->execute();
+        $company = $query->fetchAll(PDO::FETCH_OBJ);
+        return $company;
+    }
 }
 

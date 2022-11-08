@@ -1,5 +1,5 @@
 "use strict";
-const api = "api/company/";
+const api = "http://localhost/TPE2F/api/company/";
 let companies = [];
 
 let form = document.querySelector('#form_add');
