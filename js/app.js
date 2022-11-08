@@ -1,5 +1,5 @@
 "use strict";
-const api = "http://localhost/web2/TpFinal/Tp_webdos_final/api/company";
+const api = "http://localhost/web2/TpFinal/Tp_webdos_final/api/company/";
 
 let form = document.querySelector('#form_add');
 form.addEventListener('submit', addCompany);
@@ -24,15 +24,23 @@ function showCompany(companies){
     let ul = document.querySelector("#li");
     ul.innerHTML = "";
     for (const company of companies) {
-        ul.innerHTML += `<tr>
+        let html =      `<tr>
                             <td>${company.Tiker}</td>
                             <td>${company.Company}</td>
                             <td>${company.Sector}</td>
                             <td>
-						        <a type='button' class='btn btn-danger'>Borrar</a>
-						        <a data-task${company.id} type='button' class='btn btn-warning btn-delete'>modificar</a>
+						        <a hrfer='#' data-company="${company.id}" type='button' class='btn btn-danger btn-delete'>Borrar</a>
+						        <a hrfer='#' type='button' class='btn btn-warning'>modificar</a>
 					        </td>
                          </tr>`;
+
+        ul.innerHTML += html;
+    }
+
+
+    const btnsDelete = document.querySelectorAll('.btn-delete');
+    for (const btnDelete of btnsDelete){
+        btnDelete.addEventListener('click', deleteCompany);
     }
 }
 
@@ -63,4 +71,19 @@ async function addCompany(e){
     }
 }
 
+
+
+async function  deleteCompany(e){
+    e.preventDefault();
+    try {
+        let id = e.target.dataset.company;
+        let response = await fetch(api + id, {method: 'DELETE'});
+        if (!response.ok) {
+            throw new Error("Recuso no existe");
+        }
+        getCompany();
+    } catch (e) {
+        console.log(e);
+    }
+}
 getCompany();
