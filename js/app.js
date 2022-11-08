@@ -1,5 +1,6 @@
 "use strict";
-const api = "http://localhost/web2/TpFinal/Tp_webdos_final/api/company/";
+const api = "api/company/";
+let companies = [];
 
 let form = document.querySelector('#form_add');
 form.addEventListener('submit', addCompany);
@@ -7,12 +8,11 @@ form.addEventListener('submit', addCompany);
 async function getCompany(){
     try {
         let response = await fetch(api);
-        if (response.ok){
-            let companies = await response.json();
-            showCompany(companies)
-        }else{
-            throw new Error("Recurso no existente");
+        if(!response.ok){
+            throw new Error("Recurso no existe")
         }
+        companies = await response.json();
+        showCompany();
     } catch (e) {
         console.log(e);
     }
@@ -20,7 +20,7 @@ async function getCompany(){
 }
 
 
-function showCompany(companies){
+function showCompany(){
     let ul = document.querySelector("#li");
     ul.innerHTML = "";
     for (const company of companies) {
@@ -61,9 +61,14 @@ async function addCompany(e){
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify(company)
         });
-        if (!response.ok)
+        if (!response.ok){
             throw new Error('Recurso no existe');
-        getCompany();
+        }
+        
+        let newCompany = await response.json();
+        companies.push(newCompany);
+        showCompany();
+        
         form.reset()
 
     } catch (e) {
@@ -81,9 +86,12 @@ async function  deleteCompany(e){
         if (!response.ok) {
             throw new Error("Recuso no existe");
         }
-        getCompany();
+        companies = companies.filter(company => company.id != id);
+        showCompany();
     } catch (e) {
         console.log(e);
     }
 }
 getCompany();
+
+//minitu 46:33
