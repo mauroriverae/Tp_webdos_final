@@ -45,19 +45,38 @@
             </div>
           </nav>
     </header>
+
     <main class="container">
-      <form action="add" method="POST" class="my-4">
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Tiker</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Sector</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody id="li">
+            
+          </tbody>
+        </table>
+      </div>
+
+
+      <form  id="form_add" method="POST" class="my-4">
         <div class="row">
             <div class="col-9">
                 <div class="form-group">
                     <label>company</label>
-                    <input name="company" type="text" class="form-control" required>
+                    <input name="Company" type="text" class="form-control" required>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-group">
                     <label>Sector</label>
-                    <select name="sector" class="form-control">
+                    <select name="Sector" class="form-control">
                         <option value="Tecnologia">Tecnologia</option>
                         <option value="Servicios de comunicacion">	Servicios de comunicacion</option>
                         <option value="Materiales Basicos">Materiales Basicos</option>
@@ -71,18 +90,14 @@
     
         <div class="form-group">
             <label>Tiker</label>
-            <input name="tiker" type="text" class="form-control i__tiker" required>
+            <input name="Tiker" type="text" class="form-control i__tiker" required>
         </div>
     
     
         <button type="submit" class="btn btn-primary mt-2">Guardar</button>
         
       </form>
-      
-      <ul id="li">
-
-      </ul>
-
+    
 
     </main>
     <footer class="text-center">
