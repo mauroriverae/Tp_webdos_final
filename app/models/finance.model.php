@@ -61,20 +61,5 @@ class FinanceModel {
         $query = $this->db->prepare("UPDATE companies SET Company=?, Sector=?, Tiker=? WHERE id=?");
         $query->execute([$company , $sector , $tiker, $id ]);
     }
-
-    public function get($id) {
-        $query = $this->db->prepare("SELECT * FROM companies WHERE id = ?");
-        $query->execute([$id]);
-        $company = $query->fetch(PDO::FETCH_OBJ);
-        
-        return $company;
-    }
-
-    public function orderCompany($order){
-        $query = $this->db->prepare("SELECT * FROM companies ORDER BY id $order");
-        $query->execute();
-        $company = $query->fetchAll(PDO::FETCH_OBJ);
-        return $company;
-    }
 }
 
