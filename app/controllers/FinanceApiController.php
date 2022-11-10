@@ -15,10 +15,13 @@
 
         function showCompanies(){
             //faltan validaciones 
-            
-            $companies = $this->model->getAllCompany("Sector");
+            if(isset($_GET['order']) && isset($_GET['sort'])){
+                $order = $_GET['order'];
+                $sort = $_GET['sort'];
+                $companies = $this->model->getAllCompany($order, $sort);
+                return $this->view->response($companies, 200);
+            }
 
-            return $this->view->response($companies, 200);
             
         }
         

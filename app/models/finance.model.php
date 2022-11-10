@@ -8,12 +8,28 @@ class FinanceModel {
         $this->db = new PDO('mysql:host=localhost;'.'dbname=finance;charset=utf8', 'root', '');
     }
 
-    public function getAllCompany($order) {
-        $query = $this->db->prepare("SELECT * FROM companies ORDER BY $order ");
-        $query->execute([]);
-        $company = $query->fetchAll(PDO::FETCH_OBJ); 
-        return $company;
-    }
+    public function getAllCompany($order, $sort) {
+        if($order == "Sector" && $sort == "DESC"){
+            echo "Ordenado por $order y de forma $sort";
+            $query = $this->db->prepare("SELECT * FROM companies ORDER BY Sector DESC");
+            $query->execute([]);
+            $company = $query->fetchAll(PDO::FETCH_OBJ); 
+            return $company;
+        }
+        if(($order == "Sector" && $sort == "ASC")){
+            echo "Ordenado por $order y de forma $sort";
+            $query = $this->db->prepare("SELECT * FROM companies ORDER BY Sector ASC");
+            $query->execute([]);
+            $company = $query->fetchAll(PDO::FETCH_OBJ); 
+            return $company;
+        } else{
+            echo "No hay orden declarado";
+            $query = $this->db->prepare("SELECT * FROM companies");
+            $query->execute([]);
+            $company = $query->fetchAll(PDO::FETCH_OBJ); 
+            return $company;
+        }
+    }    
 
     function getCompany($id) {
         $query = $this->db->prepare("SELECT * FROM companies WHERE id=?");
