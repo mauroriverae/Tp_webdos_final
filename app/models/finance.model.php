@@ -7,7 +7,8 @@ class FinanceModel {
     public function __construct() {
         $this->db = new PDO('mysql:host=localhost;'.'dbname=finance;charset=utf8', 'root', '');
     }
-
+    // filter
+    //Prevenir inyeccion por contreller y la paginacion tiene dos parametros 
     public function getAllCompany($order, $sort) {
         if($order == "Sector" && $sort == "DESC"){
             echo "Ordenado por $order y de forma $sort";
