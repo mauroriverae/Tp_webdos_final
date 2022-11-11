@@ -9,13 +9,21 @@ class FinanceModel {
     }
     // filter
     //Prevenir inyeccion por contreller y la paginacion tiene dos parametros 
-    public function getAllCompany($order, $sort) {
-        if($order == "Sector" && $sort == "DESC"){
+    public function getAllCompany($order , $sort ) {
+        if($order && $sort){
             echo "Ordenado por $order y de forma $sort";
-            $query = $this->db->prepare("SELECT * FROM companies ORDER BY Sector DESC");
+            $query = $this->db->prepare("SELECT * FROM companies ORDER BY $order $sort");
             $query->execute([]);
             $company = $query->fetchAll(PDO::FETCH_OBJ); 
             return $company;
+        } else{
+            $query = $this->db->prepare("SELECT * FROM companies");
+            $query->execute([]);
+            $company = $query->fetchAll(PDO::FETCH_OBJ); 
+            return $company;
+        }
+
+       /*  if($order == "Sector" && $sort == "DESC"){
         }
         if(($order == "Sector" && $sort == "ASC")){
             echo "Ordenado por $order y de forma $sort";
@@ -29,7 +37,7 @@ class FinanceModel {
             $query->execute([]);
             $company = $query->fetchAll(PDO::FETCH_OBJ); 
             return $company;
-        }
+        } */
     }    
 
     function getCompany($id) {

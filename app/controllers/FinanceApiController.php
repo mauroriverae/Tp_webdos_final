@@ -14,16 +14,28 @@
         }
 
         function showCompanies(){
-            //faltan validaciones 
+            //faltan validaciones
+            //http://localhost/web2/TpFinal/Tp_webdos_final/api/company?order=Tiker&sort=ASC
             if(isset($_GET['order']) && isset($_GET['sort'])){
                 $order = $_GET['order'];
                 $sort = $_GET['sort'];
+                if($order === "Sector" || $order === "Tiker" || $order == "Company" && $sort === "ASC" || $sort=== "DESC"){
+                    $companies = $this->model->getAllCompany($order, $sort);
+                    return $this->view->response($companies, 200);
+                } 
+                else{
+                    return $this->view->response("El parametro ingresado es incorrecto", 400); //revisa si no va un 200 y p
+                }
+            }else{
+                $order = null;
+                $sort = null;
                 $companies = $this->model->getAllCompany($order, $sort);
                 return $this->view->response($companies, 200);
-            }
-
+            } 
+            
             
         }
+
         
         function showCompany($params = null){
             $id = $params[":ID"];
