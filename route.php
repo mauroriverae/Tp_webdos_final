@@ -6,7 +6,6 @@
 
     $router -> addRoute('company', 'GET', 'FinanceApiController', 'showCompanies');
     $router -> addRoute('company/:ID', 'GET', 'FinanceApiController', 'showCompany');
-    $router -> addRoute('sector/:ID', 'GET', 'FinanceApiController', 'showSector');
     $router -> addRoute('company/:ID', 'DELETE', 'FinanceApiController', 'deleteCompany');
     $router -> addRoute('company', 'POST', 'FinanceApiController', 'addCompany');
     $router -> addRoute('company/:ID', 'PUT', 'FinanceApiController', 'updateCompany');

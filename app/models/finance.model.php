@@ -9,7 +9,7 @@ class FinanceModel {
     }
     // filter
     //Prevenir inyeccion por contreller y la paginacion tiene dos parametros 
-    public function getAllCompany($order , $sort ) {
+    public function getAllCompany($order , $sort) {
         if($order && $sort){
             echo "Ordenado por $order y de forma $sort";
             $query = $this->db->prepare("SELECT * FROM companies ORDER BY $order $sort");

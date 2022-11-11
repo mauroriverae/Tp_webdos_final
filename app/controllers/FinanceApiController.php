@@ -26,14 +26,21 @@
                 else{
                     return $this->view->response("El parametro ingresado es incorrecto", 400); //revisa si no va un 200 y p
                 }
-            }else{
+            } else if (isset($_GET['filter'])){
+                $sector = $_GET['filter'];
+                if($sector === 'Tecnologia' || $sector=='Servicios de comunicacion'  || $sector=='Materiales Basicos' || $sector=='Industriales' || $sector=='Energia' || $sector== 'Servicios financieros' || $sector=='Consumo discrecional'){
+                    $companies = $this->model->FilterCompany($sector);
+                    return $this->view->response($companies, 200);
+                } else {
+                    return $this->view->response("Parametros incorrectos", 400);
+                }
+            }
+            else{
                 $order = null;
                 $sort = null;
                 $companies = $this->model->getAllCompany($order, $sort);
                 return $this->view->response($companies, 200);
             } 
-            
-            
         }
 
         
@@ -64,7 +71,7 @@
                 if(!empty($body->Company)&& !empty($body->Sector) &&!empty($body->Tiker)){
                     $this->model->updateCompany($body->Company , $body->Sector, $body->Tiker, $id);
                     $company = $this->model->getCompany($id);
-                    return $this->view->response($company, 200);
+                    return $this->view->response($company , 200);
                 } else{
                     return $this->view->response("Complete todos los campos para modificar", 400);
                 }
@@ -92,7 +99,7 @@
             $tiker = strtoupper($body->Tiker);
             if(!empty($body->Company)&& !empty($body->Sector)&& !empty($tiker)){
                 $id = $this->model->insertCompany(ucwords($body->Company) , $body->Sector , $tiker);
-                $company = $this->model->get($id);
+                $company = $this->model->getCompany($id);
                 return $this->view->response($company, 200);
             }else {
                 return $this->view->response("Faltan completar campos", 400);
