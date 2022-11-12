@@ -19,8 +19,8 @@
             //ORDEN 
             if(isset($_GET['order']) || isset($_GET['sort']) || isset($_GET['filter']) ){
                 if(isset($_GET['order']) and isset($_GET['sort'])){
-                    $order = $_GET['order'];
-                    $sort = $_GET['sort'];
+                    $order = ucfirst($_GET['order']);
+                    $sort = strtoupper($_GET['sort']);
                     if($order === "Sector" || $order === "Tiker" || $order === "Company" and $sort === "ASC" || $sort=== "DESC"){
                         $companies = $this->model->getAllCompanyOrder($order, $sort);
                         return $this->view->response($companies, 200);
@@ -33,8 +33,8 @@
                 // FILTRO + ORDEN + ASC O DESC
                 elseif (isset($_GET['filter']) and isset($_GET['column']) and isset($_GET['sort'])){
                     $filter = $_GET['filter'];
-                    $order = $_GET['column'];
-                    $sort =  $_GET['sort'];
+                    $order = ucfirst($_GET['order']);
+                    $sort = strtoupper($_GET['sort']);
                     if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter=='Consumo discrecional'and $sort === "ASC" || $sort=== "DESC" and $order === "Sector" || $order === "Tiker" || $order === "id" || $order === "Company") {
                         $companies = $this->model->FilterCompany($filter, $order, $sort);
                         return $this->view->response($companies, 200);  
@@ -44,7 +44,7 @@
                 }
                 // SOLO FILTRO
                 elseif(isset($_GET['filter'])){
-                    $filter = $_GET['filter'];
+                    $filter = ucfirst($_GET['filter']);
                     if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter=='Consumo discrecional') {
                         $companies = $this->model->FilterCompany($filter, "Company", "ASC");
                         return $this->view->response($companies, 200);  
@@ -85,7 +85,9 @@
             $company = $this->model->getCompany($id);
             if($company){
                 if(!empty($body->Company)&& !empty($body->Sector) &&!empty($body->Tiker)){
-                    $this->model->updateCompany($body->Company , $body->Sector, $body->Tiker, $id);
+                    $tiker = strtoupper($body->Tiker);
+                    $company = ucwords($body->Company);
+                    $this->model->updateCompany($company, $body->Sector, $tiker, $id);
                     $company = $this->model->getCompany($id);
                     return $this->view->response($company , 200);
                 } else{
@@ -113,7 +115,8 @@
             //Refactorizar BD, agregarle id como primary
             $body = $this->getBody();
             $tiker = strtoupper($body->Tiker);
-            if(!empty($body->Company)&& !empty($body->Sector)&& !empty($tiker)){
+            $company = ucwords($body->Company);
+            if(!empty($company)&& !empty($body->Sector)&& !empty($tiker)){
                 $id = $this->model->insertCompany(ucwords($body->Company) , $body->Sector , $tiker);
                 $company = $this->model->getCompany($id);
                 return $this->view->response($company, 200);

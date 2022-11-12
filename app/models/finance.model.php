@@ -18,7 +18,7 @@ class FinanceModel {
     }
     
     function getAllCompanyOrder($order , $sort) {
-            echo "Ordenado por $order y de forma $sort";
+            echo "Ordenado por $order y de forma $sort ";
             $query = $this->db->prepare("SELECT * FROM companies ORDER BY $order $sort");
             $query->execute([]);
             $company = $query->fetchAll(PDO::FETCH_OBJ); 
