@@ -9,36 +9,31 @@ class FinanceModel {
     }
     // filter
     //Prevenir inyeccion por contreller y la paginacion tiene dos parametros 
-    public function getAllCompany($order , $sort) {
-        if($order && $sort){
+
+    function getAllCompany(){
+        $query = $this->db->prepare("SELECT * FROM companies");
+        $query->execute([]);
+        $company = $query->fetchAll(PDO::FETCH_OBJ); 
+        return $company;
+    }
+    
+    function getAllCompanyOrder($order , $sort) {
             echo "Ordenado por $order y de forma $sort";
             $query = $this->db->prepare("SELECT * FROM companies ORDER BY $order $sort");
             $query->execute([]);
             $company = $query->fetchAll(PDO::FETCH_OBJ); 
             return $company;
-        } else{
-            $query = $this->db->prepare("SELECT * FROM companies");
-            $query->execute([]);
-            $company = $query->fetchAll(PDO::FETCH_OBJ); 
-            return $company;
-        }
+    }
 
-       /*  if($order == "Sector" && $sort == "DESC"){
-        }
-        if(($order == "Sector" && $sort == "ASC")){
-            echo "Ordenado por $order y de forma $sort";
-            $query = $this->db->prepare("SELECT * FROM companies ORDER BY Sector ASC");
-            $query->execute([]);
-            $company = $query->fetchAll(PDO::FETCH_OBJ); 
-            return $company;
-        } else{
-            echo "No hay orden declarado";
-            $query = $this->db->prepare("SELECT * FROM companies");
-            $query->execute([]);
-            $company = $query->fetchAll(PDO::FETCH_OBJ); 
-            return $company;
-        } */
-    }    
+    function FilterCompany($sector, $sort){
+        $query = $this->db->prepare("SELECT * FROM companies WHERE Sector = ? ORDER BY Tiker $sort");
+        $query->execute([$sector]); 
+        $companySector = $query->fetchall(PDO::FETCH_OBJ);
+        return $companySector;
+    }
+   
+
+    
 
     function getCompany($id) {
         $query = $this->db->prepare("SELECT * FROM companies WHERE id=?");
@@ -52,14 +47,7 @@ class FinanceModel {
        $query->execute([$id]);
    }
 
-    function FilterCompany($sector){
-        $query = $this->db->prepare('SELECT * FROM companies WHERE Sector = ?');
-        $query->execute([$sector]); 
-        $companySector = $query->fetchall(PDO::FETCH_OBJ);
-        return $companySector;
-    }
-   
-
+    
     function insertCompany($company , $sector , $tiker) {
         $query = $this->db->prepare("INSERT INTO companies (Company, Sector, Tiker) VALUES (?, ?, ?)");
         $query->execute([$company, $sector, $tiker]);
