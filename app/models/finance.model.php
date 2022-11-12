@@ -25,8 +25,8 @@ class FinanceModel {
             return $company;
     }
 
-    function FilterCompany($sector, $sort){
-        $query = $this->db->prepare("SELECT * FROM companies WHERE Sector = ? ORDER BY Tiker $sort");
+    function FilterCompany($sector, $order, $sort){
+        $query = $this->db->prepare("SELECT * FROM companies WHERE Sector = ? ORDER BY $order $sort");
         $query->execute([$sector]); 
         $companySector = $query->fetchall(PDO::FETCH_OBJ);
         return $companySector;
