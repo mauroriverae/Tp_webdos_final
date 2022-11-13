@@ -35,7 +35,7 @@
                     $filter = $_GET['filter'];
                     $order = ucfirst($_GET['order']);
                     $sort = strtoupper($_GET['sort']);
-                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter=='Consumo discrecional'and $sort === "ASC" || $sort=== "DESC" and $order === "Sector" || $order === "Tiker" || $order === "id" || $order === "Company") {
+                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter==='Consumo discrecional'and $sort === "ASC" || $sort=== "DESC" and $order === "Sector" || $order === "Tiker" || $order === "id" || $order === "Company") {
                         $companies = $this->model->FilterCompany($filter, $order, $sort);
                         return $this->view->response($companies, 200);  
                     }else{
@@ -45,7 +45,7 @@
                 // SOLO FILTRO
                 elseif(isset($_GET['filter'])){
                     $filter = ucfirst($_GET['filter']);
-                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter=='Consumo discrecional') {
+                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter==='Consumo discrecional') {
                         $companies = $this->model->FilterCompany($filter, "Company", "ASC");
                         return $this->view->response($companies, 200);  
                     }else{
