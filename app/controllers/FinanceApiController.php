@@ -13,6 +13,8 @@
             $this->data = file_get_contents("php://input");
         }
 
+    
+
         function showCompanies(){
             //faltan validaciones
             //http://localhost/web2/TpFinal/Tp_webdos_final/api/company?order=Tiker&sort=ASC
@@ -21,11 +23,11 @@
                 if(isset($_GET['order']) and isset($_GET['sort'])){
                     $order = ucfirst($_GET['order']);
                     $sort = strtoupper($_GET['sort']);
-                    if($order === "Sector" || $order === "Tiker" || $order === "Company" and $sort === "ASC" || $sort=== "DESC"){
+                    if($order === "Sector" || $order === "Tiker" || $order === "Company" and $sort === "ASC" || $sort === "DESC"){
                         $companies = $this->model->getAllCompanyOrder($order, $sort);
                         return $this->view->response($companies, 200);
                     }
-                    else{
+                    else{   
                         return $this->view->response("El parametro ingresado es incorrecto", 400); //revisa si no va un 200 y p
                     }
                 }
@@ -33,7 +35,7 @@
                 // FILTRO + ORDEN + ASC O DESC
                 elseif (isset($_GET['filter']) and isset($_GET['column']) and isset($_GET['sort'])){
                     $filter = $_GET['filter'];
-                    $order = ucfirst($_GET['order']);
+                    $order = ucfirst($_GET['column']);
                     $sort = strtoupper($_GET['sort']);
                     if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter==='Consumo discrecional'and $sort === "ASC" || $sort=== "DESC" and $order === "Sector" || $order === "Tiker" || $order === "id" || $order === "Company") {
                         $companies = $this->model->FilterCompany($filter, $order, $sort);
@@ -91,7 +93,7 @@
                     $company = $this->model->getCompany($id);
                     return $this->view->response($company , 200);
                 } else{
-                    return $this->view->response("Complete todos los campos para modificar", 400);
+                    return $this->view->response("Complete todos los campos para modificar", 409);
                 }
             }
             else{
@@ -119,9 +121,9 @@
             if(!empty($company)&& !empty($body->Sector)&& !empty($tiker)){
                 $id = $this->model->insertCompany(ucwords($body->Company) , $body->Sector , $tiker);
                 $company = $this->model->getCompany($id);
-                return $this->view->response($company, 200);
+                return $this->view->response($company, 201);
             }else {
-                return $this->view->response("Faltan completar campos", 400);
+                return $this->view->response("Faltan completar campos", 409);
             }
            
         }

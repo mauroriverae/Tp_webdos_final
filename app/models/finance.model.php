@@ -9,6 +9,13 @@ class FinanceModel {
     }
     // filter
     //Prevenir inyeccion por contreller y la paginacion tiene dos parametros 
+    
+    function count(){
+        $query = $this->db->prepare("SELECT COUNT(*) FROM companies");
+        $query->execute([]);
+        $quant = $query->fetch(PDO::FETCH_OBJ); 
+        return $quant;
+    }
 
     function getAllCompany(){
         $query = $this->db->prepare("SELECT * FROM companies");
@@ -26,6 +33,7 @@ class FinanceModel {
     }
 
     function FilterCompany($sector, $order, $sort){
+        echo "Filtrado por: $sector en orden de columna : $order y  de forma: $sort ";
         $query = $this->db->prepare("SELECT * FROM companies WHERE Sector = ? ORDER BY $order $sort");
         $query->execute([$sector]); 
         $companySector = $query->fetchall(PDO::FETCH_OBJ);
