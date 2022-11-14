@@ -19,7 +19,21 @@
             //faltan validaciones
             //http://localhost/web2/TpFinal/Tp_webdos_final/api/company?order=Tiker&sort=ASC
             //ORDEN 
-            if(isset($_GET['order']) || isset($_GET['sort']) || isset($_GET['filter']) ){
+            
+            if(isset($_GET['order']) || isset($_GET['sort']) || isset($_GET['filter'])){
+
+                if(isset($_GET['order']) and isset($_GET['sort'])){
+                    $order = ucfirst($_GET['order']);
+                    $sort = strtoupper($_GET['sort']);
+                    if($order === "Sector" || $order === "Tiker" || $order === "Company" and $sort === "ASC" || $sort === "DESC"){
+                        $companies = $this->model->getAllCompanyOrderPage($order, $sort);
+                        return $this->view->response($companies, 200);
+                    }
+                    else{   
+                        return $this->view->response("El parametro ingresado es incorrecto", 400); //revisa si no va un 200 y p
+                    }
+                }
+                
                 if(isset($_GET['order']) and isset($_GET['sort'])){
                     $order = ucfirst($_GET['order']);
                     $sort = strtoupper($_GET['sort']);
