@@ -3,9 +3,9 @@
 GET /company
 Access the list of companies
 
-  add query params to get request:
-    /company?order?&sort?
-    /company?filter=?&column=?&sort=?
+  add query params to get request:<br>
+    /company?order?&sort?<br>
+    /company?filter=?&column=?&sort=?<br>
     /company?filter <br>
     /company?column=?&search=?
     
