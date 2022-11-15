@@ -2,12 +2,14 @@
 
 GET /company
 Access the list of companies
- ##add query params to get request:
+
+  add query params to get request:
     /company?order?&sort?
     /company?filter=?&column=?&sort=?
     /company?filter
     /company?column=?&search=?
-      ##Restricts:
+    
+      Restricts:
         Filter= Tecnologia, Servicios de comunicacion, Materiales Basicos, Energia, Servicios financieros, Industriales, Consumo discrecional
         Sort= ASC or DESC
         Order = Tiker, Sector, Company
