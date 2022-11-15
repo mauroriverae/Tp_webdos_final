@@ -6,7 +6,7 @@ Access the list of companies
   add query params to get request:
     /company?order?&sort?
     /company?filter=?&column=?&sort=?
-    /company?filter
+    /company?filter <br>
     /company?column=?&search=?
     
       Restricts:
