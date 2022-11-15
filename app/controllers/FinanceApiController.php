@@ -19,25 +19,27 @@
             //faltan validaciones
             //http://localhost/web2/TpFinal/Tp_webdos_final/api/company?order=Tiker&sort=ASC
             //ORDEN 
-            
-            if(isset($_GET['order']) || isset($_GET['sort']) || isset($_GET['filter'])){
+            if(isset($_GET['column']) and isset($_GET['search'])){
+                $column = $_GET['column'];
+                $name = $_GET['search'];
+                if($column === "Sector" ||$column === "Tiker" || $column === "Company" || $column === "id" ){
+                    $company = $this->model->searchTiker($column, $name);
+                    if($company)
+                     return $this->view->response($company, 200);
+                    else
+                        return $this->view->response("El Tiker no existe o el parametro es incorrecto", 404);
+                }
+                else{
+                    return $this->view->response("La columna es incorrecta", 404);
+                }
+            }
+
+            if( isset($_GET['order']) || isset($_GET['sort']) || isset($_GET['filter'])){
 
                 if(isset($_GET['order']) and isset($_GET['sort'])){
                     $order = ucfirst($_GET['order']);
                     $sort = strtoupper($_GET['sort']);
-                    if($order === "Sector" || $order === "Tiker" || $order === "Company" and $sort === "ASC" || $sort === "DESC"){
-                        $companies = $this->model->getAllCompanyOrderPage($order, $sort);
-                        return $this->view->response($companies, 200);
-                    }
-                    else{   
-                        return $this->view->response("El parametro ingresado es incorrecto", 400); //revisa si no va un 200 y p
-                    }
-                }
-                
-                if(isset($_GET['order']) and isset($_GET['sort'])){
-                    $order = ucfirst($_GET['order']);
-                    $sort = strtoupper($_GET['sort']);
-                    if($order === "Sector" || $order === "Tiker" || $order === "Company" and $sort === "ASC" || $sort === "DESC"){
+                    if($order === "Sector" || $order === "Tiker" || $order === "Company" and $sort === "ASC" || $sort === "DESC" ){
                         $companies = $this->model->getAllCompanyOrder($order, $sort);
                         return $this->view->response($companies, 200);
                     }
@@ -51,7 +53,7 @@
                     $filter = $_GET['filter'];
                     $order = ucfirst($_GET['column']);
                     $sort = strtoupper($_GET['sort']);
-                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter=='Consumo discrecional'and $sort === "ASC" || $sort=== "DESC" and $order === "Sector" || $order === "Tiker" || $order === "id" || $order === "Company") {
+                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter==='Consumo discrecional'and $sort === "ASC" || $sort=== "DESC" and $order === "Sector" || $order === "Tiker" || $order === "id" || $order === "Company") {
                         $companies = $this->model->FilterCompany($filter, $order, $sort);
                         return $this->view->response($companies, 200);  
                     }else{
@@ -61,7 +63,7 @@
                 // SOLO FILTRO
                 elseif(isset($_GET['filter'])){
                     $filter = ucfirst($_GET['filter']);
-                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter=='Consumo discrecional') {
+                    if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter==='Consumo discrecional') {
                         $companies = $this->model->FilterCompany($filter, "Company", "ASC");
                         return $this->view->response($companies, 200);  
                     }else{
@@ -78,11 +80,15 @@
         
         function showCompany($params = null){
             $id = $params[":ID"];
-            $company = $this->model->getCompany($id);
-            if($company)
-                return $this->view->response($company, 200);
-            else
-                return $this->view->response("El tiker con $id no exite", 404);
+            if(is_numeric($id)){
+                $company = $this->model->getCompany($id);
+                if($company)
+                    return $this->view->response($company, 200);
+                else
+                    return $this->view->response("El tiker con $id no exite", 404);
+            } else{
+                return $this->view->response("El id tiene que ser numerico", 404);
+            }
         } 
 
         function showSector($params = null){

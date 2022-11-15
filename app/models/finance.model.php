@@ -9,16 +9,17 @@ class FinanceModel {
     }
     // filter
     //Prevenir inyeccion por contreller y la paginacion tiene dos parametros 
-    
-    function count(){
-        $query = $this->db->prepare("SELECT COUNT(*) FROM companies");
-        $query->execute([]);
-        $quant = $query->fetch(PDO::FETCH_OBJ); 
-        return $quant;
-    }
+  
 
     function getAllCompany(){
         $query = $this->db->prepare("SELECT * FROM companies");
+        $query->execute([]);
+        $company = $query->fetchAll(PDO::FETCH_OBJ); 
+        return $company;
+    }
+
+    function searchTiker($column, $name){
+        $query = $this->db->prepare("SELECT * FROM companies WHERE $column LIKE '%$name%'");
         $query->execute([]);
         $company = $query->fetchAll(PDO::FETCH_OBJ); 
         return $company;
