@@ -11,6 +11,16 @@ class FinanceModel {
     //Prevenir inyeccion por contreller y la paginacion tiene dos parametros 
   
 
+    function getAllCompanyPage($page){
+        $cant = ($page-1) * 5;
+        echo $cant;
+        $query = $this->db->prepare("SELECT * FROM companies LIMIT 5 OFFSET $cant");
+        $query->execute([]);
+        $company = $query->fetchAll(PDO::FETCH_OBJ); 
+        return $company;
+    }
+
+
     function getAllCompany(){
         $query = $this->db->prepare("SELECT * FROM companies");
         $query->execute([]);

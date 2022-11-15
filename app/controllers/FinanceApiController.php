@@ -72,8 +72,18 @@
                 }
             }
             else{
-                $companies = $this->model->getAllCompany();
-                return $this->view->response($companies, 200);
+                if(isset($_GET['page'])){
+                    if( is_numeric($_GET['page'])){
+                        $page= $_GET['page'];
+                            $companies = $this->model->getAllCompanyPage($page);
+                            return $this->view->response($companies, 200);
+                    } else{
+                        return $this->view->response("Para paginar debe ingresar un valor numerico", 404);
+                    }
+                }else{
+                    $companies = $this->model->getAllCompany();
+                    return $this->view->response($companies, 200);
+                }
             }
         }
 
