@@ -71,6 +71,9 @@
                     }
                 }
             }
+            // faltaria replicar en todos lados
+            //contar Q de elementos (limit dinamic)
+            //Y mostrar si la pagina esta vacia
             else{
                 if(isset($_GET['page'])){
                     if( is_numeric($_GET['page'])){
