@@ -146,6 +146,7 @@
             $company = ucwords($body->Company);
             if(!empty($company)&& !empty($body->Sector)&& !empty($tiker)){
                 $verify = $this->model->verifyAdd($tiker);
+                //verifica si existe el tiker, evito repeticion
                 if(!$verify){
                     $id = $this->model->insertCompany($company , $body->Sector , $tiker);
                     $company = $this->model->getCompany($id);
