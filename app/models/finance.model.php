@@ -36,7 +36,6 @@ class FinanceModel {
     }
     
     function getAllCompanyOrder($order , $sort) {
-            echo "Ordenado por $order y de forma $sort ";
             $query = $this->db->prepare("SELECT * FROM companies ORDER BY $order $sort");
             $query->execute([]);
             $company = $query->fetchAll(PDO::FETCH_OBJ); 
@@ -44,7 +43,6 @@ class FinanceModel {
     }
 
     function FilterCompany($sector, $order, $sort){
-        echo "Filtrado por: $sector en orden de columna : $order y  de forma: $sort ";
         $query = $this->db->prepare("SELECT * FROM companies WHERE Sector = ? ORDER BY $order $sort");
         $query->execute([$sector]); 
         $companySector = $query->fetchall(PDO::FETCH_OBJ);
@@ -57,6 +55,13 @@ class FinanceModel {
     function getCompany($id) {
         $query = $this->db->prepare("SELECT * FROM companies WHERE id=?");
         $query->execute([$id]);
+        $company = $query->fetch(PDO::FETCH_OBJ);
+        return $company;
+    }
+    
+    function verifyAdd($tiker) {
+        $query = $this->db->prepare("SELECT * FROM companies WHERE Tiker=?");
+        $query->execute([$tiker]);
         $company = $query->fetch(PDO::FETCH_OBJ);
         return $company;
     }

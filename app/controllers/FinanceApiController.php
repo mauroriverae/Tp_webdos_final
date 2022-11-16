@@ -16,8 +16,8 @@
     
 
         function showCompanies(){
-            //faltan validaciones
-            //http://localhost/web2/TpFinal/Tp_webdos_final/api/company?order=Tiker&sort=ASC
+            
+            
             //ORDEN 
             if(isset($_GET['column']) and isset($_GET['search'])){
                 $column = $_GET['column'];
@@ -34,8 +34,8 @@
                 }
             }
 
+            //http://localhost/web2/TpFinal/Tp_webdos_final/api/company?order=Tiker&sort=ASC
             if( isset($_GET['order']) || isset($_GET['sort']) || isset($_GET['filter'])){
-
                 if(isset($_GET['order']) and isset($_GET['sort'])){
                     $order = ucfirst($_GET['order']);
                     $sort = strtoupper($_GET['sort']);
@@ -48,7 +48,8 @@
                     }
                 }
 
-                // FILTRO + ORDEN + ASC O DESC
+                // FILTRO + COLUMN + ASC O DESC
+                //http://localhost/TPE2F/api/company?filter=Tecnologia&coumn=Sector&sort=asc
                 elseif (isset($_GET['filter']) and isset($_GET['column']) and isset($_GET['sort'])){
                     $filter = $_GET['filter'];
                     $order = ucfirst($_GET['column']);
@@ -61,6 +62,7 @@
                     }
                 }
                 // SOLO FILTRO
+                //http://localhost/TPE2F/api/company?filter=Tecnologia
                 elseif(isset($_GET['filter'])){
                     $filter = ucfirst($_GET['filter']);
                     if ($filter === 'Tecnologia' || $filter==='Servicios de comunicacion'  || $filter==='Materiales Basicos' || $filter==='Industriales' || $filter==='Energia' || $filter==='Servicios financieros' || $filter==='Consumo discrecional') {
@@ -71,10 +73,9 @@
                     }
                 }
             }
-            // faltaria replicar en todos lados
-            //contar Q de elementos (limit dinamic)
-            //Y mostrar si la pagina esta vacia
+            
             else{
+                //http://localhost/TPE2F/api/company?page=1
                 if(isset($_GET['page'])){
                     if( is_numeric($_GET['page'])){
                         $page= $_GET['page'];
@@ -84,6 +85,7 @@
                         return $this->view->response("Para paginar debe ingresar un valor numerico", 404);
                     }
                 }else{
+                    //http://localhost/TPE2F/api/company
                     $companies = $this->model->getAllCompany();
                     return $this->view->response($companies, 200);
                 }
@@ -92,6 +94,7 @@
 
         
         function showCompany($params = null){
+            //http://localhost/TPE2F/api/company/12
             $id = $params[":ID"];
             if(is_numeric($id)){
                 $company = $this->model->getCompany($id);
@@ -102,16 +105,6 @@
             } else{
                 return $this->view->response("El id tiene que ser numerico", 404);
             }
-        } 
-
-        function showSector($params = null){
-            $sector = $params[":ID"];
-            echo $sector;
-            $companies = $this->model->FilterCompany($sector);
-            if($companies)
-                return $this->view->response($companies, 200);
-            else
-                return $this->view->response("El $sector no existe", 404);
         } 
 
         function updateCompany($params = null){
@@ -135,6 +128,7 @@
         } 
         
         function deleteCompany($params = null){
+            //http://localhost/TPE2F/api/company/44
             $id = $params[":ID"];
             $company = $this->model->getCompany($id);
             if($company){
@@ -146,15 +140,19 @@
         }
 
 
-        function addCompany($params = null){
-            //Refactorizar BD, agregarle id como primary
+        function addCompany($params = null){ 
             $body = $this->getBody();
             $tiker = strtoupper($body->Tiker);
             $company = ucwords($body->Company);
             if(!empty($company)&& !empty($body->Sector)&& !empty($tiker)){
-                $id = $this->model->insertCompany(ucwords($body->Company) , $body->Sector , $tiker);
-                $company = $this->model->getCompany($id);
-                return $this->view->response($company, 201);
+                $verify = $this->model->verifyAdd($tiker);
+                if(!$verify){
+                    $id = $this->model->insertCompany($company , $body->Sector , $tiker);
+                    $company = $this->model->getCompany($id);
+                    return $this->view->response($company, 201);
+                }else{
+                    return $this->view->response("El campo que intenta agregar ya existe", 400);
+                }
             }else {
                 return $this->view->response("Faltan completar campos", 409);
             }
