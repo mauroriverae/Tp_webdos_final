@@ -135,7 +135,7 @@
                 $this->model->deleteCompnayByname($id);
                 return $this->view->response("Borrado con exito", 200);
             } else{
-                return $this->view->response("El tiker $tiker no existe", 404);
+                return $this->view->response("El tiker con $id no existe", 404);
             }
         }
 
